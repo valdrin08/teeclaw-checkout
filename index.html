@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TeeInClaw — Get your plugin license</title>
+<meta name="description" content="Enter your GitHub username to buy TeeInClaw — the TeeInBlue AI operator plugin for Claude Code. Your repository invitation is sent to this username.">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center;
+    background: #17171c; color: #ececf1;
+    font: 16px/1.5 -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+    padding: 24px;
+  }
+  main { width: 100%; max-width: 420px; }
+  h1 { font-size: 1.25rem; margin: 0 0 4px; }
+  h1 span { color: #b9a7ff; }
+  p.sub { margin: 0 0 24px; color: #a3a3b2; font-size: .95rem; }
+  label { display: block; font-size: .85rem; color: #c6c6d4; margin-bottom: 6px; }
+  input {
+    width: 100%; padding: 12px 14px; font-size: 1rem;
+    background: #23232b; color: #ececf1;
+    border: 1px solid #3a3a46; border-radius: 10px; outline: none;
+    transition: border-color 160ms ease-out;
+  }
+  input:focus { border-color: #7c5cff; }
+  input.invalid { border-color: #e5484d; }
+  button {
+    width: 100%; margin-top: 14px; padding: 12px 16px; font-size: 1rem; font-weight: 600;
+    background: #7c5cff; color: #fff; border: 0; border-radius: 10px; cursor: pointer;
+    transition: transform 160ms ease-out, background 160ms ease-out;
+  }
+  button:hover { background: #8d73ff; }
+  button:active { transform: scale(0.98); }
+  .error { min-height: 20px; margin: 8px 0 0; font-size: .85rem; color: #e5484d; }
+  .fine { margin-top: 18px; font-size: .8rem; color: #77778a; }
+  .fine a { color: #a99bd8; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Buy <span>TeeInClaw</span></h1>
+  <p class="sub">Your repository invitation is sent to the GitHub username below — enter it exactly (accept within 7 days).</p>
+  <form id="f" novalidate>
+    <label for="u">GitHub username</label>
+    <input id="u" name="u" autocomplete="username" spellcheck="false" autofocus
+           placeholder="e.g. octocat" aria-describedby="err">
+    <p class="error" id="err" aria-live="polite"></p>
+    <button type="submit">Continue to checkout →</button>
+  </form>
+  <p class="fine">One-time payment · handled by <a href="https://www.lemonsqueezy.com" rel="noopener">Lemon Squeezy</a> · not affiliated with TeeInBlue or Anthropic.</p>
+</main>
+<script>
+  var CHECKOUT = "https://teeclaw.lemonsqueezy.com/checkout/buy/d3882aa9-e16d-421e-b89f-94ae1df1e673";
+  var input = document.getElementById("u");
+  var err = document.getElementById("err");
+  // GitHub username rules: 1-39 chars, alphanumerics and single hyphens, no leading/trailing hyphen
+  var GH = /^[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}$/;
+
+  var pre = new URLSearchParams(location.search).get("u");
+  if (pre) input.value = pre;
+
+  document.getElementById("f").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = input.value.trim();
+    if (!GH.test(v)) {
+      input.classList.add("invalid");
+      err.textContent = "That doesn't look like a valid GitHub username (letters, numbers, hyphens; 1-39 characters).";
+      input.focus();
+      return;
+    }
+    input.classList.remove("invalid");
+    err.textContent = "";
+    location.href = CHECKOUT + "?" + new URLSearchParams({ "checkout[custom][github_username]": v }).toString();
+  });
+  input.addEventListener("input", function () { input.classList.remove("invalid"); err.textContent = ""; });
+</script>
+</body>
+</html>
