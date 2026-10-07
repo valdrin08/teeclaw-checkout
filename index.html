@@ -9,8 +9,23 @@
       content="TeeInClaw turns Claude Code into a TeeInBlue operator for Shopify and Etsy print-on-demand sellers: campaigns built and published, artwork designed to print spec, orders fulfilled. $49 one time."
     />
     <meta
+      property="og:title"
+      content="TeeInClaw: the TeeInBlue operator plugin for Claude Code"
+    />
+    <meta
+      property="og:description"
+      content="TeeInClaw turns Claude Code into a TeeInBlue operator for Shopify and Etsy print-on-demand sellers: campaigns built and published, artwork designed to print spec, orders fulfilled. $49 one time."
+    />
+    <meta
+      property="og:image"
+      content="https://valdrin08.github.io/teeclaw-checkout/media/og.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'"
+      content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self' data:; media-src 'self'; base-uri 'none'"
     />
     <style>
       :root {
@@ -413,6 +428,43 @@
         color: var(--ink-faint);
       }
 
+      /* embedded proof clips and section stills — same card language as .cmd */
+      .media-fig {
+        margin: 0;
+      }
+      .media-fig video,
+      .media-fig img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: var(--cmd-bg);
+        box-shadow:
+          0 1px 2px oklch(30% 0.04 210 / 0.06),
+          0 18px 44px -22px oklch(30% 0.05 210 / 0.2);
+      }
+      .media-fig figcaption {
+        margin-top: 10px;
+        font: 500 0.78rem/1.5 var(--mono);
+        color: var(--ink-faint);
+      }
+      .hero-media {
+        margin-top: 22px;
+        opacity: 0;
+        animation: rise 280ms var(--ease) 320ms forwards;
+      }
+      .row .media-fig {
+        grid-column: 2;
+        margin-top: 18px;
+      }
+      .how-media {
+        margin-top: 8px;
+      }
+      .what-media {
+        margin-top: clamp(32px, 5vw, 48px);
+      }
+
       .price-block {
         display: grid;
         grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
@@ -628,6 +680,23 @@
             · not affiliated with TeeInBlue or Anthropic.
           </p>
         </form>
+
+        <figure class="media-fig hero-media">
+          <video
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="media/hero-campaign-poster.webp"
+            width="960"
+            height="720"
+          >
+            <source src="media/hero-campaign.mp4" type="video/mp4" />
+          </video>
+          <figcaption>
+            /teeinclaw:new-campaign — prompt to published campaign
+          </figcaption>
+        </figure>
       </div>
 
       <section id="what">
@@ -651,6 +720,15 @@
                 Ask for the design. It comes back at the size and resolution the
                 base calls for, so it prints the way you intended.
               </p>
+              <figure class="media-fig">
+                <img
+                  src="media/artwork-printspec.webp"
+                  alt="Artwork spec sheet: a print design presented with 4500 by 5400 pixel dimension lines and a 300 dpi badge"
+                  width="1280"
+                  height="800"
+                  loading="lazy"
+                />
+              </figure>
             </div>
             <div class="row">
               <h3>Orders fulfilled</h3>
@@ -659,8 +737,33 @@
                 store: check what is there, pull the details, move each one
                 along.
               </p>
+              <figure class="media-fig">
+                <video
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  poster="media/orders-poster.webp"
+                  width="1280"
+                  height="800"
+                >
+                  <source src="media/orders.mp4" type="video/mp4" />
+                </video>
+                <figcaption>
+                  /teeinclaw:orders — live store data, moved along
+                </figcaption>
+              </figure>
             </div>
           </div>
+          <figure class="media-fig what-media">
+            <img
+              src="media/kb-overview.webp"
+              alt="The distilled knowledge surface: 87 MCP tools, 12 plus 5 skills and commands, 181 help-center articles, 5 doctor checks"
+              width="1280"
+              height="800"
+              loading="lazy"
+            />
+          </figure>
           <div class="spec">
             <div>
               <span class="n">87</span>
@@ -742,6 +845,22 @@
               </p>
             </div>
           </div>
+          <figure class="media-fig how-media">
+            <video
+              muted
+              loop
+              playsinline
+              preload="none"
+              poster="media/doctor-poster.webp"
+              width="1280"
+              height="800"
+            >
+              <source src="media/doctor.mp4" type="video/mp4" />
+            </video>
+            <figcaption>
+              /teeinclaw:doctor — license, bridge, mcp_url, token, smoke: 5 / 5
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -896,6 +1015,47 @@
         input.classList.remove("invalid");
         err.textContent = "";
       });
+
+      // Embedded proof clips: play only while visible; reduced motion (or no
+      // JS) keeps every video at its static poster — no video carries the
+      // autoplay attribute, so nothing moves unless this script opts in.
+      (function () {
+        var videos = Array.prototype.slice.call(
+          document.querySelectorAll("video"),
+        );
+        if (!videos.length) return;
+        var reduce =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduce || !("IntersectionObserver" in window)) {
+          videos.forEach(function (v) {
+            var sources = v.querySelectorAll("source");
+            for (var i = 0; i < sources.length; i++)
+              sources[i].parentNode.removeChild(sources[i]);
+            v.removeAttribute("src");
+            v.load();
+          });
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              var v = entry.target;
+              if (entry.isIntersecting) {
+                if (v.preload === "none") v.preload = "auto";
+                var p = v.play();
+                if (p && p.catch) p.catch(function () {});
+              } else {
+                v.pause();
+              }
+            });
+          },
+          { threshold: 0.25 },
+        );
+        videos.forEach(function (v) {
+          io.observe(v);
+        });
+      })();
     </script>
   </body>
 </html>
