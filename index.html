@@ -3,136 +3,865 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TeeInClaw — Get your plugin license</title>
+    <title>TeeInClaw: the TeeInBlue operator plugin for Claude Code</title>
     <meta
       name="description"
-      content="Enter your GitHub username to buy TeeInClaw — the TeeInBlue AI operator plugin for Claude Code. Your repository invitation is sent to this username."
+      content="TeeInClaw turns Claude Code into a TeeInBlue operator for Shopify and Etsy print-on-demand sellers: campaigns built and published, artwork designed to print spec, orders fulfilled. $49 one time."
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'"
     />
     <style>
       :root {
-        color-scheme: dark;
+        color-scheme: light;
+        --paper: oklch(96.5% 0.007 192);
+        --panel: oklch(98.3% 0.005 192);
+        --panel-deep: oklch(94.4% 0.011 192);
+        --ink: oklch(26% 0.02 220);
+        --ink-soft: oklch(42% 0.025 215);
+        --ink-faint: oklch(50% 0.025 215);
+        --line: oklch(87% 0.012 195);
+        --accent: oklch(46% 0.085 200);
+        --accent-deep: oklch(38% 0.08 205);
+        --accent-ink: oklch(98% 0.005 192);
+        --wash: oklch(92.5% 0.03 195);
+        --err: oklch(48% 0.17 30);
+        --cmd-bg: oklch(28% 0.025 220);
+        --cmd-ink: oklch(93% 0.01 190);
+        --ease: cubic-bezier(0.23, 1, 0.32, 1);
+        --sans:
+          ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        --mono:
+          ui-monospace, "Cascadia Mono", "Roboto Mono", Menlo, Consolas,
+          monospace;
+        --wrap: 1100px;
+        --radius: 12px;
+        --sec-pad: clamp(56px, 9vw, 96px);
       }
       * {
         box-sizing: border-box;
       }
+      html {
+        scroll-behavior: smooth;
+      }
       body {
         margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        background: #17171c;
-        color: #ececf1;
-        font:
-          16px/1.5 -apple-system,
-          "Segoe UI",
-          Roboto,
-          Inter,
-          sans-serif;
-        padding: 24px;
+        background: var(--paper);
+        color: var(--ink);
+        font: 1rem/1.65 var(--sans);
+        -webkit-text-size-adjust: 100%;
       }
-      main {
-        width: 100%;
-        max-width: 420px;
+      ::selection {
+        background: var(--wash);
+      }
+      .wrap {
+        max-width: var(--wrap);
+        margin-inline: auto;
+        padding-inline: clamp(20px, 5vw, 44px);
+      }
+      a {
+        color: var(--accent-deep);
+        text-underline-offset: 3px;
+      }
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+      .skip {
+        position: absolute;
+        left: 16px;
+        top: -48px;
+        z-index: 20;
+        padding: 10px 16px;
+        background: var(--panel);
+        border: 1px solid var(--accent);
+        border-radius: 8px;
+        color: var(--accent-deep);
+        text-decoration: none;
+        transition: top 150ms var(--ease);
+      }
+      .skip:focus {
+        top: 12px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        text-wrap: balance;
       }
       h1 {
-        font-size: 1.25rem;
-        margin: 0 0 4px;
+        font-size: clamp(2rem, 1.3rem + 3vw, 3rem);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        font-weight: 700;
+        max-width: 17ch;
       }
-      h1 span {
-        color: #b9a7ff;
+      h2 {
+        font-size: clamp(1.4rem, 1.15rem + 1.1vw, 1.75rem);
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        font-weight: 700;
       }
-      p.sub {
-        margin: 0 0 24px;
-        color: #a3a3b2;
-        font-size: 0.95rem;
-      }
-      label {
-        display: block;
-        font-size: 0.85rem;
-        color: #c6c6d4;
-        margin-bottom: 6px;
-      }
-      input {
-        width: 100%;
-        padding: 12px 14px;
-        font-size: 1rem;
-        background: #23232b;
-        color: #ececf1;
-        border: 1px solid #3a3a46;
-        border-radius: 10px;
-        outline: none;
-        transition: border-color 160ms ease-out;
-      }
-      input:focus {
-        border-color: #7c5cff;
-      }
-      input.invalid {
-        border-color: #e5484d;
-      }
-      button {
-        width: 100%;
-        margin-top: 14px;
-        padding: 12px 16px;
-        font-size: 1rem;
+      h3 {
+        font-size: 1.05rem;
+        line-height: 1.35;
         font-weight: 600;
-        background: #7c5cff;
-        color: #fff;
-        border: 0;
-        border-radius: 10px;
+      }
+      .kicker {
+        margin: 0 0 10px;
+        font: 600 0.78rem/1 var(--mono);
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--accent-deep);
+      }
+      .lede {
+        margin: 18px 0 0;
+        max-width: 52ch;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--ink-soft);
+      }
+
+      .site-head {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+      }
+      .site-head .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding-block: 10px;
+      }
+      .wordmark {
+        font: 700 1rem/1 var(--mono);
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+      }
+      .wordmark::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        margin-left: 7px;
+        border-radius: 2px;
+        background: var(--accent);
+      }
+      .head-cta {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid var(--accent);
+        border-radius: 999px;
+        font: 600 0.85rem/1 var(--mono);
+        color: var(--accent-deep);
+        text-decoration: none;
+        background: transparent;
         cursor: pointer;
         transition:
-          transform 160ms ease-out,
-          background 160ms ease-out;
+          background-color 150ms var(--ease),
+          transform 150ms var(--ease);
       }
-      button:hover {
-        background: #8d73ff;
+      .head-cta:active {
+        transform: scale(0.97);
       }
-      button:active {
-        transform: scale(0.98);
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 26px;
+        border: 1px solid var(--accent-deep);
+        border-radius: 10px;
+        background: var(--accent);
+        color: var(--accent-ink);
+        font: 600 1rem/1 var(--sans);
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          background-color 150ms var(--ease),
+          transform 150ms var(--ease);
+      }
+      .btn:active {
+        transform: scale(0.97);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+        gap: clamp(32px, 5vw, 64px);
+        align-items: start;
+        padding-block: clamp(48px, 7vw, 84px) clamp(56px, 8vw, 96px);
+      }
+      .hero-copy > * {
+        opacity: 0;
+        animation: rise 280ms var(--ease) forwards;
+      }
+      .hero-copy > *:nth-child(2) {
+        animation-delay: 60ms;
+      }
+      .hero-copy > *:nth-child(3) {
+        animation-delay: 120ms;
+      }
+      p code,
+      li code {
+        font: 600 0.88em/1 var(--mono);
+        background: var(--panel-deep);
+        padding: 3px 6px;
+        border-radius: 6px;
+        white-space: nowrap;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: clamp(20px, 3vw, 28px);
+        box-shadow:
+          0 1px 2px oklch(30% 0.04 210 / 0.06),
+          0 18px 44px -22px oklch(30% 0.05 210 / 0.2);
+        scroll-margin-top: 84px;
+        opacity: 0;
+        animation: rise 280ms var(--ease) 180ms forwards;
+      }
+      .form-top {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 18px;
+        font: 600 0.78rem/1.2 var(--mono);
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+      .form-top .price-tag {
+        color: var(--accent-deep);
+        white-space: nowrap;
+      }
+      form label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--ink-soft);
+      }
+      form input {
+        width: 100%;
+        min-height: 48px;
+        padding: 10px 14px;
+        font: 500 1rem/1.4 var(--mono);
+        color: var(--ink);
+        background: var(--panel-deep);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        outline: none;
+        transition:
+          border-color 160ms var(--ease),
+          box-shadow 160ms var(--ease);
+      }
+      form input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--wash);
+      }
+      form input.invalid {
+        border-color: var(--err);
       }
       .error {
         min-height: 20px;
         margin: 8px 0 0;
         font-size: 0.85rem;
-        color: #e5484d;
+        line-height: 1.45;
+        color: var(--err);
+      }
+      form .btn {
+        width: 100%;
+        margin-top: 12px;
+        font-family: var(--mono);
+      }
+      .help {
+        margin: 14px 0 0;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        color: var(--ink-soft);
       }
       .fine {
-        margin-top: 18px;
+        margin: 16px 0 0;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
         font-size: 0.8rem;
-        color: #77778a;
+        line-height: 1.6;
+        color: var(--ink-faint);
       }
-      .fine a {
-        color: #a99bd8;
+
+      section {
+        border-top: 1px solid var(--line);
+        padding-block: var(--sec-pad);
+      }
+      .sec-head {
+        margin-bottom: clamp(28px, 4vw, 44px);
+      }
+      .sec-head p {
+        margin: 10px 0 0;
+        max-width: 62ch;
+        color: var(--ink-soft);
+      }
+
+      .rows {
+        border-top: 1px solid var(--line);
+      }
+      .row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+        gap: 12px 32px;
+        padding-block: 26px;
+        border-bottom: 1px solid var(--line);
+      }
+      .row p {
+        margin: 0;
+        max-width: 68ch;
+        color: var(--ink-soft);
+      }
+
+      .spec {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: clamp(32px, 5vw, 48px);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+        overflow: hidden;
+      }
+      .spec > div {
+        padding: 22px 24px;
+      }
+      .spec > div:nth-child(odd) {
+        border-right: 1px solid var(--line);
+      }
+      .spec > div:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--line);
+      }
+      .spec .n {
+        display: block;
+        font: 700 1.9rem/1.1 var(--mono);
+        letter-spacing: -0.02em;
+        color: var(--accent-deep);
+      }
+      .spec .d {
+        display: block;
+        margin-top: 6px;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        color: var(--ink-soft);
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr);
+        gap: 8px 24px;
+        padding-block: 28px;
+        border-top: 1px solid var(--line);
+      }
+      .step:last-of-type {
+        border-bottom: 1px solid var(--line);
+      }
+      .step-n {
+        font: 700 1.4rem/1.3 var(--mono);
+        color: var(--accent);
+      }
+      .step h3 {
+        margin-bottom: 8px;
+      }
+      .step p {
+        margin: 0;
+        max-width: 66ch;
+        color: var(--ink-soft);
+      }
+      .cmd {
+        margin-top: 16px;
+        padding: 14px 18px;
+        border-radius: 10px;
+        background: var(--cmd-bg);
+        color: var(--cmd-ink);
+        overflow-x: auto;
+      }
+      .cmd code {
+        display: block;
+        white-space: pre;
+        font: 500 0.9rem/1.9 var(--mono);
+      }
+      .cmd code::before {
+        content: "$ ";
+        color: var(--wash);
+        font-weight: 700;
+      }
+      .req {
+        margin: 22px 0 0;
+        font: 500 0.82rem/1.6 var(--mono);
+        color: var(--ink-faint);
+      }
+
+      .price-block {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+        overflow: hidden;
+      }
+      .price-main {
+        padding: clamp(24px, 3.5vw, 36px);
+        border-right: 1px solid var(--line);
+      }
+      .price {
+        font: 700 3.4rem/1 var(--mono);
+        letter-spacing: -0.03em;
+      }
+      .price-sub {
+        margin: 12px 0 0;
+        font-size: 0.92rem;
+        color: var(--ink-soft);
+      }
+      .price-main .btn {
+        margin-top: 28px;
+      }
+      .price-inc {
+        padding: clamp(24px, 3.5vw, 36px);
+      }
+      .price-inc ul {
+        margin: 14px 0 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--line);
+      }
+      .price-inc li {
+        padding-block: 13px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.95rem;
+      }
+      .license {
+        margin: 16px 0 0;
+        font-size: 0.8rem;
+        line-height: 1.6;
+        color: var(--ink-faint);
+      }
+
+      .faq-list {
+        border-top: 1px solid var(--line);
+      }
+      details {
+        border-bottom: 1px solid var(--line);
+      }
+      summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        min-height: 52px;
+        padding-block: 14px;
+        cursor: pointer;
+        font-weight: 600;
+        line-height: 1.4;
+        list-style: none;
+        transition: color 150ms var(--ease);
+      }
+      summary::-webkit-details-marker {
+        display: none;
+      }
+      summary::after {
+        content: "+";
+        flex: none;
+        font: 700 1.3rem/1 var(--mono);
+        color: var(--accent-deep);
+        transition: transform 200ms var(--ease);
+      }
+      details[open] summary::after {
+        transform: rotate(45deg);
+      }
+      details .a {
+        margin: 0;
+        padding: 2px 36px 20px 0;
+        max-width: 68ch;
+        color: var(--ink-soft);
+      }
+      .faq-list .cmd {
+        margin: 14px 0 0;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding-block: 40px 56px;
+      }
+      footer .legal {
+        margin: 0;
+        max-width: 72ch;
+        font-size: 0.8rem;
+        line-height: 1.7;
+        color: var(--ink-faint);
+      }
+      footer .pay {
+        margin: 18px 0 0;
+        font-size: 0.8rem;
+        color: var(--ink-faint);
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .btn:hover {
+          background: var(--accent-deep);
+          transform: translateY(-1px);
+        }
+        .head-cta:hover {
+          background: var(--wash);
+          transform: translateY(-1px);
+        }
+      }
+
+      @media (max-width: 880px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .row {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+        .price-block {
+          grid-template-columns: 1fr;
+        }
+        .price-main {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .hero-copy > *,
+        .panel {
+          animation-name: fadein;
+        }
+        summary::after {
+          transition: none;
+        }
+        @keyframes fadein {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
       }
     </style>
   </head>
   <body>
-    <main>
-      <h1>Buy <span>TeeInClaw</span></h1>
-      <p class="sub">
-        Your repository invitation is sent to the GitHub username below — enter
-        it exactly (accept within 7 days).
-      </p>
-      <form id="f" novalidate>
-        <label for="u">GitHub username</label>
-        <input
-          id="u"
-          name="u"
-          autocomplete="username"
-          spellcheck="false"
-          autofocus
-          placeholder="e.g. octocat"
-          aria-describedby="err"
-        />
-        <p class="error" id="err" aria-live="polite"></p>
-        <button type="submit">Continue to checkout →</button>
-      </form>
-      <p class="fine">
-        One-time payment · handled by
-        <a href="https://www.lemonsqueezy.com" rel="noopener">Lemon Squeezy</a>
-        · not affiliated with TeeInBlue or Anthropic.
-      </p>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-head">
+      <div class="wrap">
+        <a class="wordmark" href="#top">TeeInClaw</a>
+        <a class="head-cta" href="#buy">$49 · one time</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="wrap hero-grid" id="top">
+        <div class="hero-copy">
+          <p class="kicker">Plugin for Claude Code</p>
+          <h1>Claude Code becomes your TeeInBlue operator.</h1>
+          <p class="lede">
+            TeeInClaw is built for print-on-demand sellers on Shopify and Etsy.
+            Ask in plain language: campaigns get built and published, artwork
+            comes back designed to print spec, orders get fulfilled.
+          </p>
+        </div>
+
+        <form id="buy" class="panel" novalidate>
+          <div class="form-top">
+            <span>GitHub invitation</span>
+            <span class="price-tag">$49 · one time</span>
+          </div>
+          <label for="u">GitHub username</label>
+          <input
+            id="u"
+            name="u"
+            autocomplete="username"
+            spellcheck="false"
+            autofocus
+            placeholder="e.g. octocat"
+            aria-describedby="err"
+          />
+          <p class="error" id="err" aria-live="polite"></p>
+          <button class="btn" type="submit">Continue to checkout →</button>
+          <p class="help">
+            Your repository invitation is sent to the GitHub username you enter,
+            exactly as typed. Accept it within 7 days.
+          </p>
+          <p class="fine">
+            One-time payment · handled by
+            <a href="https://www.lemonsqueezy.com" rel="noopener"
+              >Lemon Squeezy</a
+            >
+            · not affiliated with TeeInBlue or Anthropic.
+          </p>
+        </form>
+      </div>
+
+      <section id="what">
+        <div class="wrap">
+          <div class="sec-head">
+            <p class="kicker">Capabilities</p>
+            <h2>What it does</h2>
+          </div>
+          <div class="rows">
+            <div class="row">
+              <h3>Campaigns, built and published</h3>
+              <p>
+                Describe the product you want. The agent builds it in TeeInBlue,
+                from base and print areas to options, and publishes the campaign
+                when it is ready.
+              </p>
+            </div>
+            <div class="row">
+              <h3>Artwork designed to print spec</h3>
+              <p>
+                Ask for the design. It comes back at the size and resolution the
+                base calls for, so it prints the way you intended.
+              </p>
+            </div>
+            <div class="row">
+              <h3>Orders fulfilled</h3>
+              <p>
+                When orders arrive, the agent works them in your TeeInBlue
+                store: check what is there, pull the details, move each one
+                along.
+              </p>
+            </div>
+          </div>
+          <div class="spec">
+            <div>
+              <span class="n">87</span>
+              <span class="d"
+                >MCP tools relayed through the license-gated bridge</span
+              >
+            </div>
+            <div>
+              <span class="n">12 + 5</span>
+              <span class="d"
+                >skills and slash commands installed into Claude Code</span
+              >
+            </div>
+            <div>
+              <span class="n">181</span>
+              <span class="d">
+                help-center articles distilled, plus official video tutorials
+                and API docs
+              </span>
+            </div>
+            <div>
+              <span class="n">5</span>
+              <span class="d">
+                checks in /teeinclaw:doctor, the built-in health command
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="how">
+        <div class="wrap">
+          <div class="sec-head">
+            <p class="kicker">Setup</p>
+            <h2>How it works</h2>
+          </div>
+          <div class="step">
+            <span class="step-n" aria-hidden="true">1</span>
+            <div>
+              <h3>Buy once</h3>
+              <p>
+                Pay $49 through Lemon Squeezy, one time. Access is delivered to
+                the GitHub username you enter at checkout.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-n" aria-hidden="true">2</span>
+            <div>
+              <h3>Accept the invitation</h3>
+              <p>
+                The invitation arrives on that GitHub account. Accept it within
+                7 days. If it expires, a nightly job re-invites you within about
+                a day; if you mistyped the username, reply to your purchase
+                email.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-n" aria-hidden="true">3</span>
+            <div>
+              <h3>Install and configure</h3>
+              <p>Accept the invitation, then run two commands:</p>
+              <div class="cmd">
+                <code
+                  >claude plugin marketplace add valdrin08/teeclaw-plugin</code
+                >
+                <code>claude plugin install teeinclaw@valdrin-teeinclaw</code>
+              </div>
+              <p>
+                Then run <code>/plugin configure</code>, select teeinclaw, and
+                set your license key and TeeInBlue API token.
+                <code>/teeinclaw:doctor</code> confirms the install with five
+                checks.
+              </p>
+              <p class="req">
+                Requires Claude Code v2.1.207 or newer. Node.js 20 or newer
+                recommended; runs on Node 18.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing">
+        <div class="wrap">
+          <div class="sec-head">
+            <p class="kicker">Price</p>
+            <h2>One price, paid once</h2>
+          </div>
+          <div class="price-block">
+            <div class="price-main">
+              <p class="price">$49</p>
+              <p class="price-sub">one-time payment, no subscription</p>
+              <a class="btn" href="#buy">Get TeeInClaw</a>
+            </div>
+            <div class="price-inc">
+              <h3>Included</h3>
+              <ul>
+                <li>
+                  The plugin, with updates delivered through the standard Claude
+                  Code marketplace update flow
+                </li>
+                <li>
+                  The distilled TeeInBlue knowledge base the agent works from
+                </li>
+                <li>Support via the repository's Bug report issue template</li>
+              </ul>
+              <p class="license">
+                Licensed to one user on up to three activated machines. No
+                redistribution or resale.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="wrap">
+          <div class="sec-head">
+            <p class="kicker">Answers</p>
+            <h2>Common questions</h2>
+          </div>
+          <div class="faq-list">
+            <details>
+              <summary>
+                My invitation expired, or I typed the wrong username
+              </summary>
+              <p class="a">
+                Invitations expire after 7 days. A nightly job re-invites
+                expired invitations, so a fresh one arrives within about a day:
+                accept it. If you mistyped the username at checkout, or nothing
+                arrives, reply to your purchase email and support will sort it
+                out.
+              </p>
+            </details>
+            <details>
+              <summary>What do I need to run it?</summary>
+              <p class="a">
+                Claude Code v2.1.207 or newer and Node.js, 20 or newer
+                recommended (it runs on Node 18 with an upgrade notice). You
+                also need a TeeInBlue account and an API token created in the
+                TeeInBlue portal.
+              </p>
+            </details>
+            <details>
+              <summary>How does installation work?</summary>
+              <p class="a">
+                Accept the GitHub invitation, then run the two install commands
+                under How it works. Finish with /plugin configure to set your
+                license key and TeeInBlue API token, and run /teeinclaw:doctor
+                to verify the connection.
+              </p>
+            </details>
+            <details>
+              <summary>Which machines does the license cover?</summary>
+              <p class="a">
+                One user on up to three activated machines. The license
+                validates against the Lemon Squeezy license API.
+              </p>
+            </details>
+            <details>
+              <summary>
+                Is TeeInClaw affiliated with TeeInBlue or Anthropic?
+              </summary>
+              <p class="a">
+                No. TeeInClaw is an independent product. TeeInBlue is a
+                trademark (pending registration) of its owner. Claude and
+                Anthropic are trademarks of Anthropic PBC.
+              </p>
+            </details>
+            <details>
+              <summary>What if something breaks?</summary>
+              <p class="a">
+                Run /teeinclaw:doctor. It checks license, bridge, endpoint,
+                token, and a live smoke test, and every failing check prints a
+                fix. Still stuck? Open an issue on the repository with the Bug
+                report template and paste the doctor report.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <footer>
+      <div class="wrap">
+        <p class="legal">
+          TeeInClaw is an independent product. TeeInBlue is a trademark (pending
+          registration) of its owner; TeeInClaw is not affiliated with, endorsed
+          by, or sponsored by TeeInBlue. Claude and Anthropic are trademarks of
+          Anthropic PBC.
+        </p>
+        <p class="pay">
+          Payment handled by
+          <a href="https://www.lemonsqueezy.com" rel="noopener">Lemon Squeezy</a
+          >.
+        </p>
+      </div>
+    </footer>
+
     <script>
       var CHECKOUT =
         "https://teeclaw.lemonsqueezy.com/checkout/buy/d3882aa9-e16d-421e-b95f-94ae1df1e673";
@@ -144,7 +873,7 @@
       var pre = new URLSearchParams(location.search).get("u");
       if (pre) input.value = pre;
 
-      document.getElementById("f").addEventListener("submit", function (e) {
+      document.getElementById("buy").addEventListener("submit", function (e) {
         e.preventDefault();
         var v = input.value.trim();
         if (!GH.test(v)) {
